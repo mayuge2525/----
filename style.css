@@ -1,0 +1,200 @@
+body {
+    font-family: 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
+    background-color: #e8f5e9; /* 薄い緑（草原のイメージ） */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.game-container {
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: 30px;
+    border: 8px solid #c5e1a5; /* 緑の縁取り */
+    box-shadow: 0 15px 0 #9ccc65; /* 3D感のある影 */
+    text-align: center;
+    width: 420px;
+}
+
+h1 {
+    color: #33691e;
+    margin-bottom: 1.5rem;
+    font-size: 28px;
+    text-shadow: 1px 1px 0 white;
+}
+
+/* 恐竜が住む場所（巣のイメージ） */
+.dino-stage {
+    height: 220px;
+    background: radial-gradient(#fff9c4, #f0f4c3); /* 温かい光 */
+    border-radius: 50% 50% 15% 15%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    position: relative;
+    border-bottom: 10px solid #d7ccc8; /* 巣の土台 */
+}
+
+#dino {
+    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    z-index: 2;
+}
+
+/* 卵の見た目（模様を追加） */
+.stage-egg {
+    width: 80px;
+    height: 100px;
+    background-color: #fff9e6;
+    border: 4px solid #f0e68c;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    background-image: 
+        radial-gradient(circle at 20% 30%, #ffd54f 10%, transparent 11%),
+        radial-gradient(circle at 70% 60%, #ffd54f 8%, transparent 9%),
+        radial-gradient(circle at 40% 80%, #ffd54f 12%, transparent 13%);
+}
+
+/* ヒビの入った卵 */
+.stage-cracked {
+    width: 80px;
+    height: 100px;
+    background-color: #fff9e6;
+    border: 4px solid #f0e68c;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+}
+.stage-cracked::after {
+    content: "⚡";
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    font-size: 50px;
+    color: #ffb74d;
+    filter: drop-shadow(0 0 5px white);
+}
+
+/* 赤ちゃん恐竜（より可愛く） */
+.stage-baby {
+    width: 110px;
+    height: 100px;
+    background-color: #81c784;
+    border-radius: 50% 50% 30% 30%;
+    border: 4px solid #4caf50;
+}
+.stage-baby::before { /* 目 */
+    content: "●   ●";
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 16px;
+    color: #1b5e20;
+}
+.stage-baby::after { /* ほっぺ */
+    content: "";
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    width: 70px;
+    height: 15px;
+    transform: translateX(-50%);
+    background: radial-gradient(circle at 15% 50%, #ff8a80 20%, transparent 25%),
+                radial-gradient(circle at 85% 50%, #ff8a80 20%, transparent 25%);
+}
+
+/* ステータスバー（可愛く） */
+.status-container {
+    width: 80%;
+    margin-top: 15px;
+}
+
+.status-container p {
+    font-size: 14px;
+    color: #558b2f;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.exp-bar-bg {
+    width: 100%;
+    height: 16px;
+    background: #f1f8e9;
+    border: 2px solid #dcedc8;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.exp-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #aed581, #81c784);
+    width: 0%;
+    transition: width 0.4s ease;
+}
+
+/* ボタン（ぷっくりしたデザイン） */
+.button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+p { color: #555; font-size: 15px; margin-bottom: 10px; }
+
+button {
+    padding: 12px;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: #fff;
+    color: #558b2f;
+    border: 3px solid #aed581;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 0 #aed581;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 0 #aed581;
+    background-color: #f1f8e9;
+}
+
+button:active {
+    transform: translateY(2px);
+    box-shadow: 0 0 0 #aed581;
+}
+
+.hidden {
+    display: none;
+}
+
+/* タイピングエリア */
+.typing-area {
+    background: #fff9c4;
+    padding: 20px;
+    border-radius: 20px;
+    border: 2px dashed #fbc02d;
+}
+
+.target-word {
+    font-size: 28px;
+    font-weight: bold;
+    color: #bdbdbd;
+    letter-spacing: 5px;
+    margin: 10px 0;
+}
+
+.typed-chars {
+    font-size: 28px;
+    font-weight: bold;
+    color: #388e3c;
+    letter-spacing: 5px;
+    position: absolute;
+    transform: translateY(-44px);
+    width: 100%;
+    pointer-events: none;
+}
+

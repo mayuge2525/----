@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>恐竜育成タイピングゲーム</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <h1>恐竜タイピング</h1>
+        
+        <div class="dino-stage">
+            <div id="dino" class="stage-egg"></div>
+            <div class="status-container">
+                <p>せいょう度: <span id="exp-value">0</span></p>
+                <div class="exp-bar-bg">
+                    <div id="exp-bar-fill" class="exp-bar-fill"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="word-selection" class="word-selection">
+            <p>教える言葉を選んでね：</p>
+            <div class="button-group">
+                <button onclick="selectWord(0)" id="word-btn-0"></button>
+                <button onclick="selectWord(1)" id="word-btn-1"></button>
+                <button onclick="selectWord(2)" id="word-btn-2"></button>
+            </div>
+        </div>
+
+        <div id="typing-area" class="typing-area hidden">
+            <p>タイピングしてね：</p>
+            <div id="target-word" class="target-word"></div>
+            <div id="typed-chars" class="typed-chars"></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
