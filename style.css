@@ -40,69 +40,22 @@ h1 {
 }
 
 #dino {
-    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    width: 180px;
+    height: 180px;
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     z-index: 2;
 }
 
-/* 卵の見た目（模様を追加） */
-.stage-egg {
-    width: 80px;
-    height: 100px;
-    background-color: #fff9e6;
-    border: 4px solid #f0e68c;
-    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-    background-image: 
-        radial-gradient(circle at 20% 30%, #ffd54f 10%, transparent 11%),
-        radial-gradient(circle at 70% 60%, #ffd54f 8%, transparent 9%),
-        radial-gradient(circle at 40% 80%, #ffd54f 12%, transparent 13%);
+#dino-svg {
+    filter: drop-shadow(0 5px 10px rgba(0,0,0,0.1));
+    transition: all 0.5s ease;
 }
 
-/* ヒビの入った卵 */
-.stage-cracked {
-    width: 80px;
-    height: 100px;
-    background-color: #fff9e6;
-    border: 4px solid #f0e68c;
-    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-}
-.stage-cracked::after {
-    content: "⚡";
-    position: absolute;
-    top: 10%;
-    left: 10%;
-    font-size: 50px;
-    color: #ffb74d;
-    filter: drop-shadow(0 0 5px white);
-}
-
-/* 赤ちゃん恐竜（より可愛く） */
-.stage-baby {
-    width: 110px;
-    height: 100px;
-    background-color: #81c784;
-    border-radius: 50% 50% 30% 30%;
-    border: 4px solid #4caf50;
-}
-.stage-baby::before { /* 目 */
-    content: "●   ●";
-    position: absolute;
-    top: 30%;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 16px;
-    color: #1b5e20;
-}
-.stage-baby::after { /* ほっぺ */
-    content: "";
-    position: absolute;
-    top: 45%;
-    left: 50%;
-    width: 70px;
-    height: 15px;
-    transform: translateX(-50%);
-    background: radial-gradient(circle at 15% 50%, #ff8a80 20%, transparent 25%),
-                radial-gradient(circle at 85% 50%, #ff8a80 20%, transparent 25%);
+#dino-main, #dino-sub {
+    transition: d 0.5s ease, fill 0.5s ease;
 }
 
 /* ステータスバー（可愛く） */
@@ -167,6 +120,35 @@ button:active {
     box-shadow: 0 0 0 #aed581;
 }
 
+/* ボタン属性色 */
+button.attr-fire { border-color: #ff8a65; color: #d84315; box-shadow: 0 4px 0 #ff8a65; }
+button.attr-water { border-color: #64b5f6; color: #1565c0; box-shadow: 0 4px 0 #64b5f6; }
+button.attr-wind { border-color: #81c784; color: #2e7d32; box-shadow: 0 4px 0 #81c784; }
+button.attr-earth { border-color: #a1887f; color: #4e342e; box-shadow: 0 4px 0 #a1887f; }
+
+.footer-actions {
+    margin-top: 30px;
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+}
+
+.reset-btn {
+    padding: 6px 12px;
+    font-size: 12px;
+    background-color: #f5f5f5;
+    color: #999;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 0 #ddd;
+    border-radius: 8px;
+}
+
+.reset-btn:hover {
+    background-color: #ffebee;
+    color: #e53935;
+    border-color: #ffcdd2;
+    box-shadow: 0 4px 0 #ffcdd2;
+}
+
 .hidden {
     display: none;
 }
@@ -177,24 +159,65 @@ button:active {
     padding: 20px;
     border-radius: 20px;
     border: 2px dashed #fbc02d;
+    position: relative;
+}
+
+.typing-wrapper {
+    position: relative;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Courier New', Courier, monospace; /* 等幅フォントでズレ防止 */
 }
 
 .target-word {
-    font-size: 28px;
+    font-size: 32px;
     font-weight: bold;
-    color: #bdbdbd;
+    color: #e0e0e0; /* 薄いグレーでお手本 */
     letter-spacing: 5px;
-    margin: 10px 0;
+    position: absolute;
+    white-space: nowrap;
 }
 
 .typed-chars {
-    font-size: 28px;
+    font-size: 32px;
     font-weight: bold;
-    color: #388e3c;
+    color: #388e3c; /* 緑色で打った文字 */
     letter-spacing: 5px;
     position: absolute;
-    transform: translateY(-44px);
-    width: 100%;
+    white-space: nowrap;
     pointer-events: none;
+    z-index: 5;
 }
 
+/* アニメーション */
+@keyframes jump {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-30px); }
+}
+
+.jump {
+    animation: jump 0.4s ease;
+}
+
+@keyframes evolve {
+    0% { filter: brightness(1) blur(0); transform: scale(1); }
+    50% { filter: brightness(1.5) blur(5px); transform: scale(1.1); }
+    100% { filter: brightness(1) blur(0); transform: scale(1); }
+}
+
+.evolve-flash {
+    animation: evolve 1s ease-out;
+}
+
+@keyframes type-hit {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.hit {
+    display: inline-block;
+    animation: type-hit 0.1s ease;
+}

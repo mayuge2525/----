@@ -11,9 +11,18 @@
         <h1>恐竜タイピング</h1>
         
         <div class="dino-stage">
-            <div id="dino" class="stage-egg"></div>
+            <div id="dino">
+                <svg id="dino-svg" viewBox="0 0 200 200" width="100%" height="100%">
+                    <g id="dino-group">
+                        <!-- 最初は卵を表示しておく -->
+                        <path id="dino-main" d="M100,150 C70,150 50,120 50,90 C50,60 70,30 100,30 C130,30 150,60 150,90 C150,120 130,150 100,150 Z" fill="#fff9e6" />
+                        <path id="dino-sub" d="M70,50 Q80,40 90,55 M110,80 Q120,70 130,85 M80,120 Q90,110 100,125" fill="#f0e68c" />
+                        <g id="dino-eyes"></g>
+                    </g>
+                </svg>
+            </div>
             <div class="status-container">
-                <p>せいょう度: <span id="exp-value">0</span></p>
+                <p>せいちょう度: <span id="exp-value">0</span></p>
                 <div class="exp-bar-bg">
                     <div id="exp-bar-fill" class="exp-bar-fill"></div>
                 </div>
@@ -31,8 +40,14 @@
 
         <div id="typing-area" class="typing-area hidden">
             <p>タイピングしてね：</p>
-            <div id="target-word" class="target-word"></div>
-            <div id="typed-chars" class="typed-chars"></div>
+            <div class="typing-wrapper">
+                <div id="target-word" class="target-word"></div>
+                <div id="typed-chars" class="typed-chars"></div>
+            </div>
+        </div>
+
+        <div class="footer-actions">
+            <button onclick="resetData()" class="reset-btn">はじめからやり直す</button>
         </div>
     </div>
     <script src="script.js"></script>
