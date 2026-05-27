@@ -8,17 +8,22 @@
 </head>
 <body>
     <div class="game-container">
+        <div class="header-tools">
+            <button id="connect-btn" onclick="connectMicrobit()" class="tool-btn">micro:bit とつなぐ</button>
+        </div>
         <h1>でぃのでぃのタイピング</h1>
         
-        <div class="dino-stage">
+        <div class="dino-stage" onclick="sootheByClick()">
+            <div id="dino-message" class="dino-bubble hidden"></div>
             <div id="dino">
                 <svg id="dino-svg" viewBox="0 0 200 200" width="100%" height="100%">
                     <g id="dino-group">
-                        <!-- 最初は卵を表示しておく -->
                         <path id="dino-main" d="M100,150 C70,150 50,120 50,90 C50,60 70,30 100,30 C130,30 150,60 150,90 C150,120 130,150 100,150 Z" fill="#fff9e6" />
                         <path id="dino-sub" d="M70,50 Q80,40 90,55 M110,80 Q120,70 130,85 M80,120 Q90,110 100,125" fill="#f0e68c" />
                         <g id="dino-eyes"></g>
+                        <g id="dino-extra"></g>
                     </g>
+                    <text id="dino-heart" x="150" y="50" font-size="30" class="hidden">❤️</text>
                 </svg>
             </div>
             <div class="status-container">
