@@ -190,7 +190,7 @@ function updateTypingDisplay() {
 }
 
 function finishTyping() {
-    currentExp += 5;
+    currentExp += 10; 
     attributePoints[currentWordAttr] += 1;
     saveData();
     dinoElement.classList.add('jump');
@@ -199,8 +199,7 @@ function finishTyping() {
 
     setTimeout(() => {
         typingArea.classList.add('hidden');
-        // 一定の確率（20%）で泣き出す（卵・ひび以外）
-        if (currentExp >= 25 && Math.random() < 0.2) {
+        if (currentExp >= 20 && Math.random() < 0.2) {
             startCrying();
         } else {
             wordSelectionArea.classList.remove('hidden');
@@ -222,11 +221,8 @@ function sootheDino() {
     isCrying = false;
     dinoMessage.classList.add('hidden');
     dinoHeart.classList.remove('hidden');
-    
-    // 笑顔の目を表示
     const originalEyes = dinoEyes.innerHTML;
     dinoEyes.innerHTML = '<path d="M75,100 Q85,90 95,100 M105,100 Q115,90 125,100" fill="none" stroke="#333" stroke-width="3" />' + baseCheeks;
-    
     setTimeout(() => {
         dinoHeart.classList.add('hidden');
         dinoEyes.innerHTML = originalEyes;
@@ -252,16 +248,13 @@ function updateDinoSVG(stage, attr) {
         dinoMain.setAttribute('fill', data.mainColor);
         dinoSub.setAttribute('d', data.sub);
         dinoSub.setAttribute('fill', data.subColor);
-        
         if (isCrying) {
-            // 泣き顔の目となみだ
             dinoEyes.innerHTML = '<circle cx="85" cy="100" r="3" fill="#333" /><circle cx="115" cy="100" r="3" fill="#333" />';
             dinoExtra.innerHTML = '<path d="M80,110 Q85,130 90,110 M110,110 Q115,130 120,110" fill="none" stroke="#4fc3f7" stroke-width="2" />';
         } else {
             dinoEyes.innerHTML = data.eyes;
             dinoExtra.innerHTML = '';
         }
-        
         dinoSub.setAttribute('stroke', 'none');
         if (stage.includes('adult')) dinoElement.style.transform = 'scale(1.2)';
         else if (stage === 'stage-baby') dinoElement.style.transform = 'scale(0.8)';
@@ -271,14 +264,15 @@ function updateDinoSVG(stage, attr) {
 
 function updateStatus() {
     expValueElement.innerText = currentExp;
-    const progress = Math.min((currentExp / 150) * 100, 100);
+    const maxExp = 100; 
+    const progress = Math.min((currentExp / maxExp) * 100, 100);
     expBarElement.style.width = `${progress}%`;
     const topAttr = Object.keys(attributePoints).reduce((a, b) => attributePoints[a] >= attributePoints[b] ? a : b);
     let nextStage = '';
     if (currentExp < 10) nextStage = 'stage-egg';
-    else if (currentExp < 25) nextStage = 'stage-cracked';
-    else if (currentExp < 75) nextStage = 'stage-baby';
-    else if (currentExp < 150) nextStage = `stage-child-${topAttr}`;
+    else if (currentExp < 20) nextStage = 'stage-cracked';
+    else if (currentExp < 50) nextStage = 'stage-baby';
+    else if (currentExp < 100) nextStage = `stage-child-${topAttr}`;
     else nextStage = `stage-adult-${topAttr}`;
 
     if (nextStage !== currentStage) {
